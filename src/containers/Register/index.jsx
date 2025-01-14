@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 import Logo from '../../assets/logo.svg';
-import { Button } from '../../components/button';
+import { Button } from '../../components/Button';
 import {
     Container,
     Form,

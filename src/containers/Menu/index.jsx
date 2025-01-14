@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { CardProduct } from '../../components/CardProduct';
 import { api } from '../../services/api';
@@ -17,10 +17,22 @@ export function Menu() {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [activeCategory, setActiveCategory] = useState(0);
+
 
     const navigate = useNavigate();
 
+    const { search } = useLocation();
+
+    const queryParams = new URLSearchParams(search);
+
+    const [activeCategory, setActiveCategory] = useState(() => {
+        const categoryId = +queryParams.get('categoria');
+
+        if (categoryId) {
+            return categoryId;
+        }
+        return 0;
+    });
 
     useEffect(() => {
         async function loadCategories() {
@@ -57,7 +69,7 @@ export function Menu() {
             setFilteredProducts(newFilteredProducts);
         }
     }, [products, activeCategory]);
-        
+
 
     return (
         <Container>
@@ -82,9 +94,9 @@ export function Menu() {
                                     search: `?categoria=${category.id}`,
                                 },
                                 {
-                                   replace: true,
+                                    replace: true,
                                 },
-                        );
+                            );
                             setActiveCategory(category.id);
                         }}
                     >

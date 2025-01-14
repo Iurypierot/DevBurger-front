@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react';
-
 import Carousel from 'react-multi-carousel';
-
 import 'react-multi-carousel/lib/styles.css';
 
+import { useNavigate } from 'react-router-dom';
+
 import { api } from '../../services/api';
-import { Container, ContainerItems, Title } from './styles';
+import { CategoryButton, Container, ContainerItems, Title } from './styles';
 
 export function CategoriesCarousel() {
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
-       async function loadCategories(){
-        const { data } = await api.get('/categories')
+        async function loadCategories() {
+            const { data } = await api.get('/categories');
 
+            setCategories(data);
+            console.log(data);
+        }
 
-        setCategories(data)
-        console.log(data);
-       }
-
-       loadCategories();
+        loadCategories();
     }, []);
 
     const responsive = {
@@ -31,7 +31,7 @@ export function CategoriesCarousel() {
             breakpoint: { max: 3000, min: 1280 },
             items: 4,
         },
-        table: {
+        tablet: {
             breakpoint: { max: 1280, min: 690 },
             items: 3,
         },
@@ -43,7 +43,7 @@ export function CategoriesCarousel() {
 
     return (
         <Container>
-            <Title>Categotias</Title>
+            <Title>Categorias</Title>
 
             <Carousel
                 responsive={responsive}
@@ -51,13 +51,20 @@ export function CategoriesCarousel() {
                 partialVisible={false}
                 itemClass="carousel-item"
             >
-                
-            {categories.map( category => (
-                <ContainerItems key={category.id} imageUrl={category.url}>
-                  <p>{category.name}</p>
-                </ContainerItems>
-            ))}
-                
+                {categories.map((category) => (
+                    <ContainerItems key={category.id} imageUrl={category.url}>
+                        <CategoryButton
+                            onClick={() => {
+                                navigate({
+                                    pathname: '/cardapio',
+                                    search: `?categoria=${category.id}`, // Aqui foi alterado para `categoria`
+                                });
+                            }}
+                        >
+                            {category.name}
+                        </CategoryButton>
+                    </ContainerItems>
+                ))}
             </Carousel>
         </Container>
     );

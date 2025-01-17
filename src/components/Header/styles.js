@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
-    background-color: #1f1f1f;
+    background-color: ${props => props. theme.mainBlack};
     width: 100%;
     height: 72px;
     padding: 0 56px;
@@ -48,7 +48,7 @@ export const HeaderLink = styled(Link)`
     transition: color 0.2s;
    
    &:hover {
-    color: #9758a6;
+    color: ${props => props. theme.purple};
    }
 `;
 
@@ -73,7 +73,7 @@ export const Profile = styled.div`
 
     span {
         font-weight: 700;
-        color: #9758a6;
+        color: ${props => props. theme.purple};
     }
 `;
 

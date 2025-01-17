@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
+import { api } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import { useNavigate } from 'react-router-dom';
+import { Container, ContainerItems, Title, LinkCategory } from './styles';
 
-import { api } from '../../services/api';
-import { CategoryButton, Container, ContainerItems, Title } from './styles';
-
-export function CategoriesCarousel() {
-    const [categories, setCategories] = useState([]);
+export const CategoriesCarousel = () => {
     const navigate = useNavigate();
+
+    const [categories, setCategories] = useState([]);
+
 
     useEffect(() => {
         async function loadCategories() {
-            const { data } = await api.get('/categories');
+            const response = await api.get('/categories');
 
-            setCategories(data);
-            console.log(data);
+            setCategories(response.data);
         }
 
         loadCategories();
@@ -51,18 +51,19 @@ export function CategoriesCarousel() {
                 partialVisible={false}
                 itemClass="carousel-item"
             >
-                {categories.map((category) => (
-                    <ContainerItems key={category.id} imageUrl={category.url}>
-                        <CategoryButton
-                            onClick={() => {
+                {categories.map((item) => (
+                    <ContainerItems key={item.id} imageUrl={item.url}>
+                        <LinkCategory
+                            key={item.id}
+                            onClick={() =>
                                 navigate({
-                                    pathname: '/cardapio',
-                                    search: `?categoria=${category.id}`, // Aqui foi alterado para `categoria`
-                                });
-                            }}
+                                    pathname: '/menu',
+                                    search: `?categoria=${item.id}`,
+                                })
+                            }
                         >
-                            {category.name}
-                        </CategoryButton>
+                            {item.name}
+                        </LinkCategory>
                     </ContainerItems>
                 ))}
             </Carousel>

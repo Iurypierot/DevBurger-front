@@ -20,7 +20,7 @@ export function CartItems() {
             </Table.Header>
             <Table.Body>
   {cartProducts?.length ? (
-    cartProducts.map((product) => (
+    cartProducts.map(product => (
       <Table.Tr key={product.id}>
         <Table.Td>
           <ProductImage src={product.url} />

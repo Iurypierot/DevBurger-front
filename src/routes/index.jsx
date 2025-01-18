@@ -21,7 +21,7 @@ export function Router() {
         <Routes>
             {/* Rotas para usuário comum */}
             <Route path="/" element={<UserLayout />}>
-                <Route index element={<Home />} />
+            <Route index element={<Home />} />
                 <Route path="cardapio" element={<Menu />} />
                 <Route path="carrinho" element={<Cart />} />
                 <Route path="checkout" element={<Checkout />} />

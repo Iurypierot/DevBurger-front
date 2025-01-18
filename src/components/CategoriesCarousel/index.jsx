@@ -6,17 +6,18 @@ import 'react-multi-carousel/lib/styles.css';
 
 import { Container, ContainerItems, Title, LinkCategory } from './styles';
 
-export const CategoriesCarousel = () => {
-    const navigate = useNavigate();
+export function CategoriesCarousel() {
+    
 
     const [categories, setCategories] = useState([]);
 
 
     useEffect(() => {
         async function loadCategories() {
-            const response = await api.get('/categories');
+            const { data } = await api.get('/categories');
 
-            setCategories(response.data);
+            setCategories(data);
+            console.log(data)
         }
 
         loadCategories();
@@ -41,7 +42,9 @@ export const CategoriesCarousel = () => {
         },
     };
 
-    return (
+    //const navigate = useNavigate();
+
+    return <>
         <Container>
             <Title>Categorias</Title>
 
@@ -51,22 +54,27 @@ export const CategoriesCarousel = () => {
                 partialVisible={false}
                 itemClass="carousel-item"
             >
-                {categories.map((item) => (
-                    <ContainerItems key={item.id} imageUrl={item.url}>
+                {categories.map((category) => (
+                    <ContainerItems key={category.id} imageurl={category.url}>
                         <LinkCategory
-                            key={item.id}
+                            //key={item.id}
                             onClick={() =>
+                                
                                 navigate({
-                                    pathname: '/menu',
-                                    search: `?categoria=${item.id}`,
-                                })
-                            }
+                                    pathname: '/cardapio',
+                                    search: `?categoria=${category.id}`,
+
+                                }) 
+                            }   
+                            to={`/cardapio?categoria=${category.id}`}
                         >
-                            {item.name}
+                            
+                            {category.name} 
+
                         </LinkCategory>
                     </ContainerItems>
                 ))}
             </Carousel>
         </Container>
-    );
+        </>
 }

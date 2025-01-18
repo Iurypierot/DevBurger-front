@@ -48,7 +48,7 @@ export function Orders() {
         const newRows = filteredOrders.map((order) => createData(order));
         setRows(newRows);
     }, [filteredOrders]);
-
+    
 
     function handleStatus(status) {
         if (status.id === 0) {
@@ -67,14 +67,14 @@ export function Orders() {
             setFilteredOrders(orders);
         } else {
             const statusIndex = orderStatusOptions.findIndex((item) => item.id === activeStatus,
-            );
+        );
 
-            const newFilteredOrders = orders.filter((order) => order.status === orderStatusOptions[statusIndex].value,
-            );
+        const newFilteredOrders = orders.filter((order) => order.status === orderStatusOptions[statusIndex].value,
+    );
 
 
-            setFilteredOrders(newFilteredOrders);
-        }
+    setFilteredOrders(newFilteredOrders);
+    }
     }, [activeStatus, orders])
 
     return (
@@ -82,12 +82,12 @@ export function Orders() {
             <Filter>
                 {orderStatusOptions.map((status) => (
                     <FilterOption
-                        key={status.id}
+                        key={status.id} 
                         onClick={() => handleStatus(status)}
                         $isActiveStatus={activeStatus === status.id}
-                    >
+                        >
                         {status.label}
-                    </FilterOption>
+                        </FilterOption>
                 ))}
             </Filter>
 

@@ -17,8 +17,7 @@ export function Menu() {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-
-
+    
     const navigate = useNavigate();
 
     const { search } = useLocation();
@@ -63,7 +62,7 @@ export function Menu() {
             setFilteredProducts(products);
         } else {
             const newFilteredProducts = products.filter(
-                (product) => product.category_id === activeCategory,
+                product => product.category_id === activeCategory,
             );
 
             setFilteredProducts(newFilteredProducts);
@@ -71,8 +70,9 @@ export function Menu() {
     }, [products, activeCategory]);
 
 
-    return (
+    return <>
         <Container>
+
             <Banner>
                 <h1>O MELHOR
                     <br />
@@ -83,34 +83,33 @@ export function Menu() {
                 </h1>
             </Banner>
             <CategoryMenu>
-                {categories.map((category) => (
+                {categories.map(category => (
                     <CategoryButton
-                        key={category.id}
-                        $isActive={category.id === activeCategory}
-                        onClick={() => {
-                            navigate(
-                                {
-                                    pathname: '/cardapio',
-                                    search: `?categoria=${category.id}`,
-                                },
-                                {
-                                    replace: true,
-                                },
-                            );
-                            setActiveCategory(category.id);
-                        }}
-                    >
-                        {category.name}
-
-                    </CategoryButton>
+                    key={category.id}
+                    $isActive={category.id === activeCategory} // OK, props transitórias
+                    onClick={() => {
+                        navigate(
+                            {
+                                pathname: '/cardapio',
+                                search: `?categoria=${category.id}`,
+                            },
+                            {
+                                replace: true,
+                            },
+                        );
+                        setActiveCategory(category.id);
+                    }}
+                >
+                    {category.name}
+                </CategoryButton>
+                
                 ))}
             </CategoryMenu>
-
             <ProductsContainer>
-                {filteredProducts.map((product) => (
+                {filteredProducts.map(product => (
                     <CardProduct product={product} key={product.id} />
                 ))}
             </ProductsContainer>
         </Container>
-    );
+    </>
 }

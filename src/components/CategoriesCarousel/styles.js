@@ -42,7 +42,7 @@ margin-top: 20px;
 `;
 
 export const ContainerItems = styled.div`
-    background: url('${(props) => props.imageUrl}');
+    background: url('${(props) => props.imageurl}');
     background-position: center;
     background-size: cover;
     border-radius: 20px;
@@ -65,7 +65,7 @@ export const LinkCategory = styled(Link)`
     text-decoration: none;
 
     &:hover {
-        background-color: ${props => props. theme.purple};
+        background-color: ${props => props.theme.purple};
         }
 `;
 
